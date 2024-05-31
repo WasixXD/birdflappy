@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://b45ej31kj1m7n"]
+
+[ext_resource type="PackedScene" uid="uid://dyq3hgxcf5xb6" path="res://Scenes/flappy.tscn" id="1_3tv8x"]
+[ext_resource type="Script" path="res://Scripts/GameManager.gd" id="1_b347r"]
+[ext_resource type="PackedScene" uid="uid://cqtbrcakd3ky7" path="res://Scenes/pipes.tscn" id="2_rdtt0"]
+[ext_resource type="PackedScene" uid="uid://din44lr8s1sdu" path="res://Scenes/kill_zone.tscn" id="4_lcaxo"]
+[ext_resource type="Texture2D" uid="uid://cdsgp84as63om" path="res://Assets/background.jpg" id="5_c56l3"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qhq8s"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+top_level = true
+z_index = 2
+position = Vector2(578, 324)
+limit_smoothed = true
+
+[node name="Score" type="Label" parent="Camera2D"]
+unique_name_in_owner = true
+offset_left = 505.0
+offset_top = -307.0
+offset_right = 558.0
+offset_bottom = -284.0
+text = "0"
+
+[node name="Player" parent="." instance=ExtResource("1_3tv8x")]
+position = Vector2(295, 268)
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_b347r")
+pipe_scene = ExtResource("2_rdtt0")
+
+[node name="Timer" type="Timer" parent="GameManager"]
+
+[node name="Bottom" parent="." instance=ExtResource("4_lcaxo")]
+position = Vector2(608, 533)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bottom"]
+shape = SubResource("WorldBoundaryShape2D_qhq8s")
+
+[node name="Ceiling" parent="." instance=ExtResource("4_lcaxo")]
+position = Vector2(289, 0)
+rotation = 3.14159
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ceiling"]
+shape = SubResource("WorldBoundaryShape2D_qhq8s")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = -100
+offset_right = 1152.0
+offset_bottom = 650.0
+texture = ExtResource("5_c56l3")
+expand_mode = 1
+
+[connection signal="timeout" from="GameManager/Timer" to="GameManager" method="_on_timer_timeout"]

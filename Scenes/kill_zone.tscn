@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://din44lr8s1sdu"]
+
+[ext_resource type="Script" path="res://Scripts/kill_zone.gd" id="1_4n4cq"]
+[ext_resource type="AudioStream" uid="uid://lvyofj6fifi7" path="res://Assets/Everything/sfx_die.wav" id="2_eacsq"]
+
+[node name="KillZone" type="Area2D"]
+script = ExtResource("1_4n4cq")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="die" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_eacsq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

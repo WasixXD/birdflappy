@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://cqtbrcakd3ky7"]
+
+[ext_resource type="Script" path="res://Scripts/pipes_movement.gd" id="1_52mag"]
+[ext_resource type="Texture2D" uid="uid://dgw4iovm1ndsg" path="res://Assets/pipe.png" id="1_epd2q"]
+[ext_resource type="PackedScene" uid="uid://din44lr8s1sdu" path="res://Scenes/kill_zone.tscn" id="3_0pmww"]
+[ext_resource type="Script" path="res://Scripts/ScoreUp.gd" id="4_0wq5v"]
+[ext_resource type="AudioStream" uid="uid://cl3lakuam2k7c" path="res://Assets/Everything/sfx_point.wav" id="5_0ekjj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xgya3"]
+size = Vector2(22.463, 241.608)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uu7le"]
+size = Vector2(20, 61.6425)
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(251, 340)
+scale = Vector2(1.91426, 1.91426)
+script = ExtResource("1_52mag")
+
+[node name="PipeBottom" parent="." instance=ExtResource("3_0pmww")]
+
+[node name="Sprite2D" type="Sprite2D" parent="PipeBottom"]
+position = Vector2(-7.62939e-06, -0.372342)
+scale = Vector2(0.138298, 0.135816)
+texture = ExtResource("1_epd2q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PipeBottom"]
+position = Vector2(1.04479, 100.3)
+shape = SubResource("RectangleShape2D_xgya3")
+
+[node name="PipeTop" parent="." instance=ExtResource("3_0pmww")]
+position = Vector2(9.5023e-13, -101.867)
+rotation = -3.14159
+
+[node name="Sprite2D" type="Sprite2D" parent="PipeTop"]
+position = Vector2(-7.62939e-06, -0.372342)
+scale = Vector2(0.138298, 0.135816)
+texture = ExtResource("1_epd2q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PipeTop"]
+position = Vector2(0.000259042, 101.867)
+shape = SubResource("RectangleShape2D_xgya3")
+
+[node name="ScoreUp" type="Area2D" parent="."]
+script = ExtResource("4_0wq5v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreUp"]
+position = Vector2(0, -51.1946)
+shape = SubResource("RectangleShape2D_uu7le")
+
+[node name="Coin" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_0ekjj")
+
+[connection signal="body_entered" from="ScoreUp" to="ScoreUp" method="_on_body_entered"]

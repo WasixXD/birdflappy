@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyq3hgxcf5xb6"]
+
+[ext_resource type="Script" path="res://Scripts/flappy.gd" id="1_efuv8"]
+[ext_resource type="Texture2D" uid="uid://dabwfy0yb4nrn" path="res://Assets/flappy.png" id="1_ep0nn"]
+[ext_resource type="AudioStream" uid="uid://7jscf5cpju81" path="res://Assets/Everything/sfx_wing.wav" id="3_gs4rk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f8v1v"]
+radius = 16.0312
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_efuv8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1.78814e-07, 0)
+scale = Vector2(0.121622, 0.121622)
+texture = ExtResource("1_ep0nn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 1)
+shape = SubResource("CircleShape2D_f8v1v")
+
+[node name="flap" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_gs4rk")
